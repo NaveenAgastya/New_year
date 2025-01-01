@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #1e3b70, #1a1a3f, #090c1f);
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(to right, #ffcc00, #ff66ff, #33ccff);
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: glow 2s ease-in-out infinite;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #f3f3f3;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        #name-input {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        #start-btn {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #33ccff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #start-btn:hover {
+            background-color: #ff66ff;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 5px #ffcc00, 0 0 10px #ff66ff, 0 0 20px #33ccff;
+            }
+            50% {
+                text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff66ff, 0 0 40px #33ccff;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            opacity: 0.7;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ffcc00;
+            animation: explode 1.5s ease-in-out infinite;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #fff;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(40px, -40px);
+                opacity: 0.5;
+            }
+        }
+
+        .floating-balloon {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: radial-gradient(circle at 30% 30%, #ff66ff, #ff1aff);
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            #name-input {
+                font-size: 1rem;
+            }
+
+            #start-btn {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            #name-input {
+                font-size: 0.9rem;
+            }
+
+            #start-btn {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="intro">
+        <h1>Welcome!</h1>
+        <p>Please Enter Your Name: </p>
+        <input type="text" id="name-input" placeholder="Your Name">
+        <button id="start-btn">Start</button>
+    </div>
+
+    <div class="container" id="greeting" style="display: none;">
+        <h1 id="personalized-message"></h1>
+        <p>May this year bring joy, prosperity, and success to your life!</p>
+    </div>
+
+    <script>
+        const colors = ["#FF5733", "#33FF57", "#5733FF", "#FF33A6", "#FFFF33"];
+
+        for (let i = 0; i < 50; i++) {
+            const firework = document.createElement("div");
+            firework.classList.add("firework");
+            firework.style.left = `${Math.random() * 100}vw`;
+            firework.style.top = `${Math.random() * 100}vh`;
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.animationDelay = `${Math.random() * 2}s`;
+            document.body.appendChild(firework);
+
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            sparkle.style.left = `${Math.random() * 100}vw`;
+            sparkle.style.top = `${Math.random() * 100}vh`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            document.body.appendChild(sparkle);
+        }
+
+        for (let i = 0; i < 10; i++) {
+            const balloon = document.createElement("div");
+            balloon.classList.add("floating-balloon");
+            balloon.style.left = `${Math.random() * 90}vw`;
+            balloon.style.bottom = "-100px";
+            balloon.style.animationDelay = `${Math.random() * 6}s`;
+            document.body.appendChild(balloon);
+        }
+
+        document.getElementById('start-btn').addEventListener('click', () => {
+            const name = document.getElementById('name-input').value;
+            if (name.trim() !== "") {
+                document.getElementById('personalized-message').textContent = `I am Naveen, Wishing You The 🎉 Happy New Year 2025, ${name}! 🎉`;
+                document.getElementById('intro').style.display = 'none';
+                document.getElementById('greeting').style.display = 'flex';
+                startConfetti();
+            } else {
+                alert('Please enter your name!');
+            }
+        });
+
+        function startConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = `${Math.random() * 3}s`;
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
